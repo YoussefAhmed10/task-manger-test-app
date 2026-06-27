@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task_manager_test/core/helper/global_navigator.dart';
 import 'package:task_manager_test/core/routing/app_router.dart';
 import 'package:task_manager_test/core/routing/routes.dart';
+import 'package:task_manager_test/core/theming/app_colors.dart';
 
 class TaskManagerApp extends StatelessWidget {
   final AppRouter appRouter;
@@ -17,7 +19,11 @@ class TaskManagerApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: Routes.splashScreen,
         onGenerateRoute: appRouter.onGenerateRoute,
-        theme: ThemeData(fontFamily: 'Inter'),
+        navigatorKey: NavigationServices.navigatorKey,
+        theme: ThemeData(
+          fontFamily: 'Inter',
+          scaffoldBackgroundColor: AppColors.whiteColor,
+        ),
       ),
     );
   }
