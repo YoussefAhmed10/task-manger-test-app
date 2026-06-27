@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:task_manager_test/core/routing/routes.dart';
 import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/features/login/logic/cubit/login_cubit.dart';
 import 'package:task_manager_test/features/login/logic/cubit/login_state.dart';
@@ -25,7 +26,9 @@ class _LoginBlocListenerState extends State<LoginBlocListener> {
           loginLoading: () => Center(
             child: CircularProgressIndicator(color: AppColors.darkBlueColor),
           ),
-          loginSuccess: (loginResponseBody) async {},
+          loginSuccess: (loginResponseBody) {
+            Navigator.of(context).pushReplacementNamed(Routes.homeScreen);
+          },
           loginError: (error) => Fluttertoast.showToast(
             msg: error.message ?? 'Something went wrong',
             toastLength: Toast.LENGTH_SHORT,

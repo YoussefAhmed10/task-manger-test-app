@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefHelper {
   // private constructor as I don't want to allow creating an instance of this class itself.
@@ -24,6 +23,11 @@ class SharedPrefHelper {
     return await flutterSecureStorage.read(key: key) ?? '';
   }
 
+  static Future<bool> hasSecuredString(String key) async {
+    final value = await getSecuredString(key);
+    return value.isNotEmpty;
+  }
+
   /// Removes all keys and values in the FlutterSecureStorage
   static Future<void> clearAllSecuredData() async {
     debugPrint('FlutterSecureStorage : all data has been cleared');
@@ -36,19 +40,5 @@ class SharedPrefHelper {
     debugPrint('FlutterSecureStorage : all data has been cleared');
     const flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.delete(key: key);
-  }
-
-  static Future<void> handleFirstInstall() async {
-    final prefs = await SharedPreferences.getInstance();
-    const secureStorage = FlutterSecureStorage();
-
-    final isFirstInstall = prefs.getBool('has_launched_before') != true;
-
-    if (isFirstInstall) {
-      // 🔥 This guarantees a clean slate
-      await secureStorage.deleteAll();
-
-      await prefs.setBool('has_launched_before', true);
-    }
   }
 }
