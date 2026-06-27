@@ -1,0 +1,54 @@
+// ignore_for_file: type_literal_in_constant_pattern
+
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SharedPrefHelper {
+  // private constructor as I don't want to allow creating an instance of this class itself.
+  SharedPrefHelper._();
+
+  /// Saves a [value] with a [key] in the FlutterSecureStorage.
+  static Future<void> setSecuredString(String key, String value) async {
+    const flutterSecureStorage = FlutterSecureStorage();
+    debugPrint(
+      "FlutterSecureStorage : setSecuredString with key : $key and value : $value",
+    );
+    await flutterSecureStorage.write(key: key, value: value);
+  }
+
+  /// Gets an String value from FlutterSecureStorage with given [key].
+  static Future<String> getSecuredString(String key) async {
+    const flutterSecureStorage = FlutterSecureStorage();
+    // debugPrint('FlutterSecureStorage : getSecuredString with key :');
+    return await flutterSecureStorage.read(key: key) ?? '';
+  }
+
+  /// Removes all keys and values in the FlutterSecureStorage
+  static Future<void> clearAllSecuredData() async {
+    debugPrint('FlutterSecureStorage : all data has been cleared');
+    const flutterSecureStorage = FlutterSecureStorage();
+    await flutterSecureStorage.deleteAll();
+  }
+
+  /// Removes keys and values in the FlutterSecureStorage
+  static Future<void> removeSecuredData(String key) async {
+    debugPrint('FlutterSecureStorage : all data has been cleared');
+    const flutterSecureStorage = FlutterSecureStorage();
+    await flutterSecureStorage.delete(key: key);
+  }
+
+  static Future<void> handleFirstInstall() async {
+    final prefs = await SharedPreferences.getInstance();
+    const secureStorage = FlutterSecureStorage();
+
+    final isFirstInstall = prefs.getBool('has_launched_before') != true;
+
+    if (isFirstInstall) {
+      // 🔥 This guarantees a clean slate
+      await secureStorage.deleteAll();
+
+      await prefs.setBool('has_launched_before', true);
+    }
+  }
+}

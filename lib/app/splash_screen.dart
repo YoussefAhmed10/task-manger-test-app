@@ -7,9 +7,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
+import 'package:task_manager_test/core/routing/routes.dart';
 import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_image.dart';
-import 'package:task_manager_test/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,8 +19,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool androidIs12OrAbove = false; // Initialize with default value
-  bool _isLoading = true; // Add loading state
+  bool androidIs12OrAbove = false;
+  bool _isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ? await isAndroid12OrAbove()
         : false;
     setState(() {
-      _isLoading = false; // Update loading state
+      _isLoading = false;
     });
     await initSplashScreen(context: context);
   }
@@ -40,26 +40,17 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<bool> isAndroid12OrAbove() async {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    // Android 12 corresponds to API level 31
     return androidInfo.version.sdkInt >= 31;
   }
 
   Future<void> initSplashScreen({required BuildContext context}) async {
     if (androidIs12OrAbove && !Platform.isIOS) {
       if (!mounted) return;
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const MyHomePage(title: 'Task Manager'),
-        ),
-      );
+      Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
     } else {
       Timer(const Duration(seconds: 4), () {
         if (!mounted) return;
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const MyHomePage(title: 'Task Manager'),
-          ),
-        );
+        Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
       });
     }
   }
