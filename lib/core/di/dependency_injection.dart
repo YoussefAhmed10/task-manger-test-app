@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:task_manager_test/core/network/api_service.dart';
 import 'package:task_manager_test/core/network/dio_factory.dart';
+import 'package:task_manager_test/features/home/data/repo/products_repo.dart';
+import 'package:task_manager_test/features/home/logic/cubit/home_cubit.dart';
 import 'package:task_manager_test/features/login/data/repo/login_repo.dart';
 import 'package:task_manager_test/features/login/logic/cubit/login_cubit.dart';
 import 'package:task_manager_test/features/signup/data/repo/signup_repo.dart';
@@ -21,4 +23,8 @@ Future<void> setupGetIt() async {
   //signup
   getIt.registerFactory<SignupRepo>(() => SignupRepo(getIt()));
   getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
+
+  //home
+  getIt.registerFactory<ProductsRepo>(() => ProductsRepo(getIt()));
+  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
 }

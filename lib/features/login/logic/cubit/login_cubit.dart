@@ -15,17 +15,20 @@ class LoginCubit extends Cubit<LoginState> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Future<LoginResponseBody> loginUser({required LoginRequestBody requestBody}) async {
+  Future<LoginResponseBody> loginUser({
+    required LoginRequestBody requestBody,
+  }) async {
     emit(LoginState.loginLoading());
     final result = await loginRepo.loginUser(requestBody: requestBody);
     return result.when(
       success: (data) async {
-        data.accessToken == null
-            ? null
-            : await SharedPrefHelper.setSecuredString(
-                SharedPrefKeys.userToken,
-                data.accessToken!,
-              );
+        if (data.accessToken != null && data.accessToken!.isNotEmpty) {
+          await SharedPrefHelper.setSecuredString(
+            SharedPrefKeys.userToken,
+            data.accessToken!,
+          );
+          isLoggedInUser = true;
+        }
 
         emit(LoginState.loginSuccess(data: data));
         loginResponseBody = data;

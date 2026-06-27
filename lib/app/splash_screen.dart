@@ -6,7 +6,10 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task_manager_test/core/helper/cache_helper.dart';
+import 'package:task_manager_test/core/helper/constants.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
+import 'package:task_manager_test/core/network/dio_factory.dart';
 import 'package:task_manager_test/core/routing/routes.dart';
 import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_image.dart';
@@ -44,14 +47,26 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> initSplashScreen({required BuildContext context}) async {
-    if (androidIs12OrAbove && !Platform.isIOS) {
+    Future<void> navigate() async {
       if (!mounted) return;
-      Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
-    } else {
-      Timer(const Duration(seconds: 4), () {
-        if (!mounted) return;
+
+      final hasToken = await SharedPrefHelper.hasSecuredString(
+        SharedPrefKeys.userToken,
+      );
+
+      if (hasToken) {
+        isLoggedInUser = true;
+        await DioFactory.addDioHeaders();
+        Navigator.of(context).pushReplacementNamed(Routes.homeScreen);
+      } else {
         Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
-      });
+      }
+    }
+
+    if (androidIs12OrAbove && !Platform.isIOS) {
+      await navigate();
+    } else {
+      Timer(const Duration(seconds: 4), navigate);
     }
   }
 
