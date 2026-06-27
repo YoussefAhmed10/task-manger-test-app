@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager_test/core/helper/cache_helper.dart';
 import 'package:task_manager_test/core/helper/constants.dart';
 import 'package:task_manager_test/core/network/api_result.dart';
+import 'package:task_manager_test/features/login/data/models/login_request_body.dart';
 import 'package:task_manager_test/features/login/data/models/login_response_body.dart';
 import 'package:task_manager_test/features/login/data/repo/login_repo.dart';
 import 'package:task_manager_test/features/login/logic/cubit/login_state.dart';
@@ -15,9 +15,9 @@ class LoginCubit extends Cubit<LoginState> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Future<LoginResponseBody> loginUser({required FormData formData}) async {
+  Future<LoginResponseBody> loginUser({required LoginRequestBody requestBody}) async {
     emit(LoginState.loginLoading());
-    final result = await loginRepo.loginUser(formData: formData);
+    final result = await loginRepo.loginUser(requestBody: requestBody);
     return result.when(
       success: (data) async {
         data.accessToken == null

@@ -3,17 +3,18 @@ import 'dart:developer';
 import 'package:task_manager_test/core/network/api_error_handler.dart';
 import 'package:task_manager_test/core/network/api_result.dart';
 import 'package:task_manager_test/core/network/api_service.dart';
-import 'package:task_manager_test/features/login/data/models/login_request_body.dart';
-import 'package:task_manager_test/features/login/data/models/login_response_body.dart';
+import 'package:task_manager_test/features/signup/data/models/signup_request_body.dart';
+import 'package:task_manager_test/features/signup/data/models/signup_response_body.dart';
 
-class LoginRepo {
+class SignupRepo {
   final ApiService _apiService;
-  LoginRepo(this._apiService);
-  Future<ApiResult<LoginResponseBody>> loginUser({
-    required LoginRequestBody requestBody,
+  SignupRepo(this._apiService);
+
+  Future<ApiResult<SignupResponseBody>> registerUser({
+    required SignupRequestBody requestBody,
   }) async {
     try {
-      final response = await _apiService.loginUser(requestBody);
+      final response = await _apiService.registerUser(requestBody);
       return ApiResult.success(response);
     } catch (error) {
       log(error.toString());
