@@ -29,7 +29,7 @@ class _LoginBlocListenerState extends State<LoginBlocListener> {
           loginError: (error) => Fluttertoast.showToast(
             msg: error.message ?? 'Something went wrong',
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
+            gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0,

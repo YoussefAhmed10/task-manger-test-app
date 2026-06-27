@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -46,38 +47,40 @@ class ApiErrorHandler {
   }
 }
 
-Map<String, dynamic>? _asStringKeyMap(dynamic data) {
-  if (data is Map<String, dynamic>) return data;
-  if (data is Map) {
-    return data.map((k, v) => MapEntry(k.toString(), v));
-  }
-  return null;
-}
+String? _extractMessage(dynamic dataError) {
+  Map<String, dynamic>? json;
 
-String _resolveErrorMessage(Map<String, dynamic> data) {
-  final direct = data['message'];
-  if (direct != null && direct.toString().trim().isNotEmpty) {
-    return direct.toString();
+  if (dataError is Map<String, dynamic>) {
+    json = dataError;
+  } else if (dataError is Map) {
+    json = dataError.map((k, v) => MapEntry(k.toString(), v));
+  } else if (dataError is String) {
+    try {
+      final decoded = jsonDecode(dataError);
+      if (decoded is Map) {
+        json = decoded.map((k, v) => MapEntry(k.toString(), v));
+      }
+    } catch (_) {}
   }
 
-  return 'Something went wrong';
+  final message = json?['message'];
+  if (message == null || message.toString().trim().isEmpty) return null;
+  return message.toString();
 }
 
 ApiErrorModel _handleError({dynamic dataError, int? statusCode}) {
   log('Error: ${statusCode.toString()}');
-  final data = _asStringKeyMap(dataError);
+  final message = _extractMessage(dataError);
+
   if (statusCode == 401 ||
-      (data != null &&
-          (data['message'] == 'Unauthenticated' ||
-              data['message'] == 'Unauthenticated.'))) {
+      message == 'Unauthenticated' ||
+      message == 'Unauthenticated.') {
     NavigationServices.navigatorKey.currentState!.pushReplacementNamed(
       Routes.loginScreen,
     );
     SharedPrefHelper.removeSecuredData(SharedPrefKeys.userToken);
     isLoggedInUser = false;
   }
-  if (data == null) {
-    return ApiErrorModel(message: 'Something went wrong');
-  }
-  return ApiErrorModel(message: _resolveErrorMessage(data));
+
+  return ApiErrorModel(message: message ?? 'Something went wrong');
 }
