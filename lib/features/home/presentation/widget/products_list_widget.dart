@@ -6,13 +6,20 @@ import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/features/home/data/models/product_model.dart';
 import 'package:task_manager_test/features/home/logic/cubit/home_cubit.dart';
 import 'package:task_manager_test/features/home/presentation/widget/home_bloc_listener.dart';
+import 'package:task_manager_test/core/routing/routes.dart';
 import 'package:task_manager_test/features/home/presentation/widget/product_card_widget.dart';
 
 class ProductsList extends StatelessWidget {
-  const ProductsList({super.key, required this.products, required this.total});
+  const ProductsList({
+    super.key,
+    required this.products,
+    required this.total,
+    this.searchQuery,
+  });
 
   final List<ProductModel> products;
   final int total;
+  final String? searchQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +29,24 @@ class ProductsList extends StatelessWidget {
         Expanded(
           child: RefreshIndicator(
             color: AppColors.darkBlueColor,
-            onRefresh: () => context.read<HomeCubit>().getProducts(),
+            onRefresh: () => context.read<HomeCubit>().refresh(),
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               itemCount: products.length,
               separatorBuilder: (_, index) => verticalSpace(16),
               itemBuilder: (context, index) {
                 final product = products[index];
-                return ProductCardWidget(product: product);
+                return ProductCardWidget(
+                  product: product,
+                  onTap: () {
+                    if (product.id != null) {
+                      Navigator.of(context).pushNamed(
+                        Routes.productDetailsScreen,
+                        arguments: product.id,
+                      );
+                    }
+                  },
+                );
               },
             ),
           ),

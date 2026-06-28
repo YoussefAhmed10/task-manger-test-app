@@ -6,6 +6,7 @@ import 'package:task_manager_test/features/home/logic/cubit/home_cubit.dart';
 import 'package:task_manager_test/features/home/logic/cubit/home_state.dart';
 import 'package:task_manager_test/features/home/presentation/widget/empty_state_view_widget.dart';
 import 'package:task_manager_test/features/home/presentation/widget/home_error_view_widget.dart';
+import 'package:task_manager_test/features/home/presentation/widget/product_search_field_widget.dart';
 import 'package:task_manager_test/features/home/presentation/widget/products_list_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,30 +41,42 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: SafeArea(
-        child: BlocBuilder<HomeCubit, HomeState>(
-          builder: (context, state) {
-            if (state is HomeLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.darkBlueColor,
-                ),
-              );
-            }
-            if (state is HomeError) {
-              return ErrorView(
-                onRetry: () => context.read<HomeCubit>().getProducts(),
-              );
-            }
-            if (state is HomeSuccess) {
-              if (state.products.isEmpty) {
-                return EmptyStateView(
-                  onRefresh: () => context.read<HomeCubit>().getProducts(),
-                );
-              }
-              return ProductsList(products: state.products, total: state.total);
-            }
-            return const SizedBox.shrink();
-          },
+        child: Column(
+          children: [
+            const ProductSearchFieldWidget(),
+            Expanded(
+              child: BlocBuilder<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  if (state is HomeLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.darkBlueColor,
+                      ),
+                    );
+                  }
+                  if (state is HomeError) {
+                    return ErrorView(
+                      onRetry: () => context.read<HomeCubit>().refresh(),
+                    );
+                  }
+                  if (state is HomeSuccess) {
+                    if (state.products.isEmpty) {
+                      return EmptyStateView(
+                        searchQuery: state.searchQuery,
+                        onRefresh: () => context.read<HomeCubit>().refresh(),
+                      );
+                    }
+                    return ProductsList(
+                      products: state.products,
+                      total: state.total,
+                      searchQuery: state.searchQuery,
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

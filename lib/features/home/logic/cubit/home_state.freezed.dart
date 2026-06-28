@@ -128,12 +128,12 @@ return homeError(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  homeInitial,TResult Function()?  homeLoading,TResult Function( List<ProductModel> products,  int total)?  homeSuccess,TResult Function( ApiErrorModel apiErrorModel)?  homeError,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  homeInitial,TResult Function()?  homeLoading,TResult Function( List<ProductModel> products,  int total,  String? searchQuery)?  homeSuccess,TResult Function( ApiErrorModel apiErrorModel)?  homeError,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case HomeInitial() when homeInitial != null:
 return homeInitial();case HomeLoading() when homeLoading != null:
 return homeLoading();case HomeSuccess() when homeSuccess != null:
-return homeSuccess(_that.products,_that.total);case HomeError() when homeError != null:
+return homeSuccess(_that.products,_that.total,_that.searchQuery);case HomeError() when homeError != null:
 return homeError(_that.apiErrorModel);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return homeError(_that.apiErrorModel);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  homeInitial,required TResult Function()  homeLoading,required TResult Function( List<ProductModel> products,  int total)  homeSuccess,required TResult Function( ApiErrorModel apiErrorModel)  homeError,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  homeInitial,required TResult Function()  homeLoading,required TResult Function( List<ProductModel> products,  int total,  String? searchQuery)  homeSuccess,required TResult Function( ApiErrorModel apiErrorModel)  homeError,}) {final _that = this;
 switch (_that) {
 case HomeInitial():
 return homeInitial();case HomeLoading():
 return homeLoading();case HomeSuccess():
-return homeSuccess(_that.products,_that.total);case HomeError():
+return homeSuccess(_that.products,_that.total,_that.searchQuery);case HomeError():
 return homeError(_that.apiErrorModel);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return homeError(_that.apiErrorModel);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  homeInitial,TResult? Function()?  homeLoading,TResult? Function( List<ProductModel> products,  int total)?  homeSuccess,TResult? Function( ApiErrorModel apiErrorModel)?  homeError,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  homeInitial,TResult? Function()?  homeLoading,TResult? Function( List<ProductModel> products,  int total,  String? searchQuery)?  homeSuccess,TResult? Function( ApiErrorModel apiErrorModel)?  homeError,}) {final _that = this;
 switch (_that) {
 case HomeInitial() when homeInitial != null:
 return homeInitial();case HomeLoading() when homeLoading != null:
 return homeLoading();case HomeSuccess() when homeSuccess != null:
-return homeSuccess(_that.products,_that.total);case HomeError() when homeError != null:
+return homeSuccess(_that.products,_that.total,_that.searchQuery);case HomeError() when homeError != null:
 return homeError(_that.apiErrorModel);case _:
   return null;
 
@@ -257,7 +257,7 @@ String toString() {
 
 
 class HomeSuccess implements HomeState {
-  const HomeSuccess({required final  List<ProductModel> products, required this.total}): _products = products;
+  const HomeSuccess({required final  List<ProductModel> products, required this.total, this.searchQuery}): _products = products;
   
 
  final  List<ProductModel> _products;
@@ -268,6 +268,7 @@ class HomeSuccess implements HomeState {
 }
 
  final  int total;
+ final  String? searchQuery;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -279,16 +280,16 @@ $HomeSuccessCopyWith<HomeSuccess> get copyWith => _$HomeSuccessCopyWithImpl<Home
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeSuccess&&const DeepCollectionEquality().equals(other._products, _products)&&(identical(other.total, total) || other.total == total));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeSuccess&&const DeepCollectionEquality().equals(other._products, _products)&&(identical(other.total, total) || other.total == total)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products),total);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products),total,searchQuery);
 
 @override
 String toString() {
-  return 'HomeState.homeSuccess(products: $products, total: $total)';
+  return 'HomeState.homeSuccess(products: $products, total: $total, searchQuery: $searchQuery)';
 }
 
 
@@ -299,7 +300,7 @@ abstract mixin class $HomeSuccessCopyWith<$Res> implements $HomeStateCopyWith<$R
   factory $HomeSuccessCopyWith(HomeSuccess value, $Res Function(HomeSuccess) _then) = _$HomeSuccessCopyWithImpl;
 @useResult
 $Res call({
- List<ProductModel> products, int total
+ List<ProductModel> products, int total, String? searchQuery
 });
 
 
@@ -316,11 +317,12 @@ class _$HomeSuccessCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? products = null,Object? total = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? products = null,Object? total = null,Object? searchQuery = freezed,}) {
   return _then(HomeSuccess(
 products: null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
 as List<ProductModel>,total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
-as int,
+as int,searchQuery: freezed == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
