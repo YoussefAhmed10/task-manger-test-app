@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/core/widget/app_text_form_field.dart';
 import 'package:task_manager_test/features/add_product/data/models/add_product_request_body.dart';
 import 'package:task_manager_test/features/add_product/logic/cubit/add_product_cubit.dart';
@@ -47,6 +47,7 @@ class AddProductFormWidgetState extends State<AddProductFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
     final cubit = context.read<AddProductCubit>();
 
     return SingleChildScrollView(
@@ -60,14 +61,14 @@ class AddProductFormWidgetState extends State<AddProductFormWidget> {
               width: double.infinity,
               padding: EdgeInsets.all(16.w),
               decoration: BoxDecoration(
-                color: AppColors.darkBlueColor.withValues(alpha: 0.08),
+                color: colors.primaryContainer,
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Row(
                 children: [
                   Icon(
                     Icons.info_outline_rounded,
-                    color: AppColors.darkBlueColor,
+                    color: colors.onPrimaryContainer,
                     size: 22.sp,
                   ),
                   horizontalSpace(12),
@@ -76,7 +77,7 @@ class AddProductFormWidgetState extends State<AddProductFormWidget> {
                       'Fill in the product details below. All fields are required.',
                       style: TextStyle(
                         fontSize: 13.sp,
-                        color: AppColors.darkBlueColor,
+                        color: colors.onPrimaryContainer,
                         height: 1.4,
                       ),
                     ),
@@ -90,7 +91,7 @@ class AddProductFormWidgetState extends State<AddProductFormWidget> {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w700,
-                color: AppColors.blackColor,
+                color: colors.primaryText,
               ),
             ),
             verticalSpace(12),
@@ -136,7 +137,7 @@ class AddProductFormWidgetState extends State<AddProductFormWidget> {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w700,
-                color: AppColors.blackColor,
+                color: colors.primaryText,
               ),
             ),
             verticalSpace(12),
@@ -175,7 +176,7 @@ class AddProductFormWidgetState extends State<AddProductFormWidget> {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w700,
-                color: AppColors.blackColor,
+                color: colors.primaryText,
               ),
             ),
             verticalSpace(12),

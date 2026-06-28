@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/product_details/data/models/product_detail_model.dart';
 import 'package:task_manager_test/features/product_details/presentation/widget/review_card_widget.dart';
 
@@ -12,6 +12,7 @@ class ProductReviewsSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
     final reviews = product.reviews ?? [];
 
     return Column(
@@ -24,7 +25,7 @@ class ProductReviewsSectionWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w700,
-                color: AppColors.blackColor,
+                color: colors.primaryText,
               ),
             ),
             const Spacer(),
@@ -49,7 +50,7 @@ class ProductReviewsSectionWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.blackColor,
+                        color: colors.primaryText,
                       ),
                     ),
                     horizontalSpace(4),
@@ -57,7 +58,7 @@ class ProductReviewsSectionWidget extends StatelessWidget {
                       '(${reviews.length})',
                       style: TextStyle(
                         fontSize: 12.sp,
-                        color: AppColors.greyColor,
+                        color: colors.secondaryText,
                       ),
                     ),
                   ],
@@ -71,10 +72,10 @@ class ProductReviewsSectionWidget extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.all(24.w),
             decoration: BoxDecoration(
-              color: AppColors.whiteColor,
+              color: colors.surface,
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(
-                color: AppColors.darkGreyColor.withValues(alpha: 0.15),
+                color: colors.border,
               ),
             ),
             child: Column(
@@ -82,14 +83,14 @@ class ProductReviewsSectionWidget extends StatelessWidget {
                 Icon(
                   Icons.rate_review_outlined,
                   size: 40.sp,
-                  color: AppColors.greyColor,
+                  color: colors.secondaryText,
                 ),
                 verticalSpace(8),
                 Text(
                   'No reviews yet',
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: AppColors.greyColor,
+                    color: colors.secondaryText,
                   ),
                 ),
               ],

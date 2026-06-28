@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/product_details/logic/cubit/product_details_cubit.dart';
 import 'package:task_manager_test/features/product_details/logic/cubit/product_details_state.dart';
 import 'package:task_manager_test/features/product_details/presentation/widget/product_details_bloc_listener.dart';
@@ -26,8 +26,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: colors.scaffoldBackground,
       body: SafeArea(
         child: Column(
           children: [
@@ -39,9 +41,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
                 builder: (context, state) {
                   if (state is ProductDetailsLoading) {
-                    return const Center(
+                    return Center(
                       child: CircularProgressIndicator(
-                        color: AppColors.darkBlueColor,
+                        color: colors.primary,
                       ),
                     );
                   }
@@ -75,8 +77,10 @@ class _ProductDetailsAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Container(
-      color: AppColors.whiteColor,
+      color: colors.appBarBackground,
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
       child: Row(
         children: [
@@ -85,7 +89,7 @@ class _ProductDetailsAppBar extends StatelessWidget {
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 20.sp,
-              color: AppColors.blackColor,
+              color: colors.primaryText,
             ),
           ),
           Text(
@@ -93,7 +97,7 @@ class _ProductDetailsAppBar extends StatelessWidget {
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,
-              color: AppColors.blackColor,
+              color: colors.primaryText,
             ),
           ),
         ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/routing/routes.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/home/logic/cubit/home_cubit.dart';
 import 'package:task_manager_test/features/home/logic/cubit/home_state.dart';
 import 'package:task_manager_test/features/home/presentation/widget/empty_state_view_widget.dart';
@@ -26,10 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: colors.scaffoldBackground,
       appBar: AppBar(
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: colors.appBarBackground,
         elevation: 0,
         centerTitle: false,
         title: Text(
@@ -37,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(
             fontSize: 20.sp,
             fontWeight: FontWeight.w700,
-            color: AppColors.blackColor,
+            color: colors.primaryText,
           ),
         ),
         actions: [
@@ -47,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: Icon(
               Icons.person_outline_rounded,
-              color: AppColors.darkBlueColor,
+              color: colors.primary,
               size: 26.sp,
             ),
             tooltip: 'Profile',
@@ -63,9 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: BlocBuilder<HomeCubit, HomeState>(
                 builder: (context, state) {
                   if (state is HomeLoading) {
-                    return const Center(
+                    return Center(
                       child: CircularProgressIndicator(
-                        color: AppColors.darkBlueColor,
+                        color: colors.primary,
                       ),
                     );
                   }
@@ -103,14 +105,14 @@ class _HomeScreenState extends State<HomeScreen> {
             context.read<HomeCubit>().refresh();
           }
         },
-        backgroundColor: AppColors.darkBlueColor,
-        icon: Icon(Icons.add_rounded, color: AppColors.whiteColor, size: 22.sp),
+        backgroundColor: colors.primary,
+        icon: Icon(Icons.add_rounded, color: Colors.white, size: 22.sp),
         label: Text(
           'Add Product',
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
-            color: AppColors.whiteColor,
+            color: Colors.white,
           ),
         ),
       ),

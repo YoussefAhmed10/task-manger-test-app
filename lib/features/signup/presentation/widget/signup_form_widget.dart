@@ -5,6 +5,7 @@ import 'package:task_manager_test/core/helper/app_rejex.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
 import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_text_style.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/core/widget/app_text_button.dart';
 import 'package:task_manager_test/core/widget/app_text_form_field.dart';
 import 'package:task_manager_test/features/signup/data/models/signup_request_body.dart';
@@ -36,16 +37,18 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30.r),
           topRight: Radius.circular(30.r),
         ),
-        color: AppColors.whiteColor,
+        color: colors.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.2),
+            color: colors.shadow,
             spreadRadius: 5,
             blurRadius: 7,
           ),
@@ -112,7 +115,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                       isObscureText
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined,
-                      color: AppColors.obsecureGreyColor,
+                      color: colors.hintText,
                     ),
                   ),
                 ),

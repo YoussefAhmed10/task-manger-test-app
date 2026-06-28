@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_text_style.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/home/presentation/widget/home_bloc_listener.dart';
 
 class ErrorView extends StatelessWidget {
@@ -12,6 +12,8 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Column(
       children: [
         const HomeBlocListener(),
@@ -25,14 +27,14 @@ class ErrorView extends StatelessWidget {
                   Icon(
                     Icons.cloud_off_outlined,
                     size: 56.sp,
-                    color: AppColors.greyColor,
+                    color: colors.secondaryText,
                   ),
                   verticalSpace(16),
                   Text(
                     'Could not load products',
                     style: AppTextStyle.fon18darkGreyColorRegular.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.blackColor,
+                      color: colors.primaryText,
                     ),
                   ),
                   verticalSpace(24),

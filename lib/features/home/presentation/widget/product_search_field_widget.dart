@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/home/logic/cubit/home_cubit.dart';
 
 class ProductSearchFieldWidget extends StatefulWidget {
@@ -53,29 +53,31 @@ class _ProductSearchFieldWidgetState extends State<ProductSearchFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Padding(
       padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 8.h),
       child: TextField(
         controller: _controller,
-        cursorColor: AppColors.darkBlueColor,
+        cursorColor: colors.primary,
         textInputAction: TextInputAction.search,
         onChanged: _onQueryChanged,
         onSubmitted: _onSearch,
         style: TextStyle(
           fontSize: 15.sp,
-          color: AppColors.blackColor,
+          color: colors.primaryText,
         ),
         decoration: InputDecoration(
           hintText: 'Search products (min 3 characters)...',
           hintStyle: TextStyle(
             fontSize: 14.sp,
-            color: AppColors.greyColor,
+            color: colors.secondaryText,
           ),
           filled: true,
-          fillColor: AppColors.whiteColor,
+          fillColor: colors.inputFill,
           prefixIcon: Icon(
             Icons.search_rounded,
-            color: AppColors.greyColor,
+            color: colors.secondaryText,
             size: 22.sp,
           ),
           suffixIcon: ValueListenableBuilder<TextEditingValue>(
@@ -86,29 +88,26 @@ class _ProductSearchFieldWidgetState extends State<ProductSearchFieldWidget> {
                 onPressed: _onClear,
                 icon: Icon(
                   Icons.close_rounded,
-                  color: AppColors.greyColor,
+                  color: colors.secondaryText,
                   size: 20.sp,
                 ),
               );
             },
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(
-              color: AppColors.darkGreyColor.withValues(alpha: 0.2),
-            ),
+            borderSide: BorderSide(color: colors.border),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(
-              color: AppColors.darkGreyColor.withValues(alpha: 0.2),
-            ),
+            borderSide: BorderSide(color: colors.border),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
-            borderSide: const BorderSide(
-              color: AppColors.darkBlueColor,
+            borderSide: BorderSide(
+              color: colors.primary,
               width: 1.5,
             ),
           ),

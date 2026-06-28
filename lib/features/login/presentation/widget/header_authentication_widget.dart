@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_image.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 
 class HeadrAuthenticationWidge extends StatelessWidget {
   const HeadrAuthenticationWidge({
@@ -12,6 +12,8 @@ class HeadrAuthenticationWidge extends StatelessWidget {
   final double? spaceBetweenImageAndText;
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -23,7 +25,7 @@ class HeadrAuthenticationWidge extends StatelessWidget {
             style: TextStyle(
               fontSize: 28.sp,
               fontWeight: FontWeight.w700,
-              color: AppColors.blackColor,
+              color: colors.primaryText,
             ),
           ),
         ),

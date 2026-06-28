@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 
 class ProfileInfoRowWidget extends StatelessWidget {
   const ProfileInfoRowWidget({
@@ -17,16 +17,18 @@ class ProfileInfoRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Row(
       children: [
         Container(
           width: 44.w,
           height: 44.w,
           decoration: BoxDecoration(
-            color: AppColors.darkBlueColor.withValues(alpha: 0.1),
+            color: colors.primaryContainer,
             borderRadius: BorderRadius.circular(12.r),
           ),
-          child: Icon(icon, color: AppColors.darkBlueColor, size: 22.sp),
+          child: Icon(icon, color: colors.onPrimaryContainer, size: 22.sp),
         ),
         horizontalSpace(14),
         Expanded(
@@ -37,7 +39,7 @@ class ProfileInfoRowWidget extends StatelessWidget {
                 label,
                 style: TextStyle(
                   fontSize: 12.sp,
-                  color: AppColors.greyColor,
+                  color: colors.secondaryText,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -46,7 +48,7 @@ class ProfileInfoRowWidget extends StatelessWidget {
                 value,
                 style: TextStyle(
                   fontSize: 15.sp,
-                  color: AppColors.blackColor,
+                  color: colors.primaryText,
                   fontWeight: FontWeight.w600,
                 ),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/product_details/data/models/review_model.dart';
 
 class ReviewCardWidget extends StatelessWidget {
@@ -11,14 +11,16 @@ class ReviewCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: colors.surface,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: AppColors.darkGreyColor.withValues(alpha: 0.15),
+          color: colors.border,
         ),
       ),
       child: Column(
@@ -28,13 +30,13 @@ class ReviewCardWidget extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 18.r,
-                backgroundColor: AppColors.darkBlueColor.withValues(alpha: 0.1),
+                backgroundColor: colors.primaryContainer,
                 child: Text(
                   _initials(review.reviewerName),
                   style: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.darkBlueColor,
+                    color: colors.onPrimaryContainer,
                   ),
                 ),
               ),
@@ -48,7 +50,7 @@ class ReviewCardWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.blackColor,
+                        color: colors.primaryText,
                       ),
                     ),
                     verticalSpace(2),
@@ -56,7 +58,7 @@ class ReviewCardWidget extends StatelessWidget {
                       _formatDate(review.date),
                       style: TextStyle(
                         fontSize: 12.sp,
-                        color: AppColors.greyColor,
+                        color: colors.secondaryText,
                       ),
                     ),
                   ],
@@ -71,7 +73,7 @@ class ReviewCardWidget extends StatelessWidget {
               review.comment!,
               style: TextStyle(
                 fontSize: 14.sp,
-                color: AppColors.lightBlackColor,
+                color: colors.secondaryText,
                 height: 1.5,
               ),
             ),
@@ -122,6 +124,8 @@ class _RatingStars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(5, (index) {
@@ -130,7 +134,7 @@ class _RatingStars extends StatelessWidget {
           size: 16.sp,
           color: index < rating
               ? const Color(0xFFFFB800)
-              : AppColors.darkGreyColor.withValues(alpha: 0.4),
+              : colors.hintText.withValues(alpha: 0.4),
         );
       }),
     );
