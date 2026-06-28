@@ -4,6 +4,7 @@ import 'package:task_manager_test/core/network/api_constante.dart';
 import 'package:task_manager_test/features/login/data/models/login_request_body.dart';
 import 'package:task_manager_test/features/login/data/models/login_response_body.dart';
 import 'package:task_manager_test/features/home/data/models/products_response_body.dart';
+import 'package:task_manager_test/features/product_details/data/models/product_detail_model.dart';
 import 'package:task_manager_test/features/signup/data/models/signup_request_body.dart';
 import 'package:task_manager_test/features/signup/data/models/signup_response_body.dart';
 part 'api_service.g.dart';
@@ -20,4 +21,10 @@ abstract class ApiService {
 
   @GET(ApiConstant.products)
   Future<ProductsResponseBody> getProducts();
+
+  @GET(ApiConstant.productsSearch)
+  Future<ProductsResponseBody> searchProducts(@Query('q') String query);
+
+  @GET('${ApiConstant.products}/{id}')
+  Future<ProductDetailModel> getProductById(@Path('id') int id);
 }

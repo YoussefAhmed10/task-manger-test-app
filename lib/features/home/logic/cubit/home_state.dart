@@ -11,6 +11,7 @@ class HomeState with _$HomeState {
   const factory HomeState.homeSuccess({
     required List<ProductModel> products,
     required int total,
+    String? searchQuery,
   }) = HomeSuccess;
   const factory HomeState.homeError({
     required ApiErrorModel apiErrorModel,

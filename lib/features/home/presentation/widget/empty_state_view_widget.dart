@@ -8,9 +8,14 @@ import 'package:task_manager_test/core/theming/app_text_style.dart';
 import 'package:task_manager_test/features/home/presentation/widget/home_bloc_listener.dart';
 
 class EmptyStateView extends StatelessWidget {
-  const EmptyStateView({super.key, required this.onRefresh});
+  const EmptyStateView({
+    super.key,
+    required this.onRefresh,
+    this.searchQuery,
+  });
 
   final Future<void> Function() onRefresh;
+  final String? searchQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,9 @@ class EmptyStateView extends StatelessWidget {
                 Lottie.asset(AppImage.emptyStateLottie, fit: BoxFit.contain),
                 verticalSpace(24),
                 Text(
-                  'No products found',
+                  searchQuery != null
+                      ? 'No results for "$searchQuery"'
+                      : 'No products found',
                   textAlign: TextAlign.center,
                   style: AppTextStyle.fon18darkGreyColorRegular.copyWith(
                     fontWeight: FontWeight.w600,
