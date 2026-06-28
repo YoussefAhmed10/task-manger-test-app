@@ -40,6 +40,20 @@ class _HomeScreenState extends State<HomeScreen> {
             color: AppColors.blackColor,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(Routes.profileScreen);
+            },
+            icon: Icon(
+              Icons.person_outline_rounded,
+              color: AppColors.darkBlueColor,
+              size: 26.sp,
+            ),
+            tooltip: 'Profile',
+          ),
+          SizedBox(width: 8.w),
+        ],
       ),
       body: SafeArea(
         child: Column(
