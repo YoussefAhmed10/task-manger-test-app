@@ -1,4 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Required for API calls (Dio/Retrofit) and loading remote images -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Allows checking network connectivity without prompting the user -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:label="Task Manager"
         android:name="${applicationName}"
