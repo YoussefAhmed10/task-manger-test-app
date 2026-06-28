@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task_manager_test/core/routing/routes.dart';
 import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/features/home/logic/cubit/home_cubit.dart';
 import 'package:task_manager_test/features/home/logic/cubit/home_state.dart';
@@ -77,6 +78,26 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final result = await Navigator.of(context).pushNamed(
+            Routes.addProductScreen,
+          );
+          if (result == true && context.mounted) {
+            context.read<HomeCubit>().refresh();
+          }
+        },
+        backgroundColor: AppColors.darkBlueColor,
+        icon: Icon(Icons.add_rounded, color: AppColors.whiteColor, size: 22.sp),
+        label: Text(
+          'Add Product',
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.whiteColor,
+          ),
         ),
       ),
     );

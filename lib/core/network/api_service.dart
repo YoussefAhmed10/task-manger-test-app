@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:task_manager_test/core/network/api_constante.dart';
+import 'package:task_manager_test/features/add_product/data/models/add_product_request_body.dart';
 import 'package:task_manager_test/features/login/data/models/login_request_body.dart';
 import 'package:task_manager_test/features/login/data/models/login_response_body.dart';
 import 'package:task_manager_test/features/home/data/models/products_response_body.dart';
@@ -27,4 +28,9 @@ abstract class ApiService {
 
   @GET('${ApiConstant.products}/{id}')
   Future<ProductDetailModel> getProductById(@Path('id') int id);
+
+  @POST(ApiConstant.productsAdd)
+  Future<ProductDetailModel> addProduct(
+    @Body() AddProductRequestBody requestBody,
+  );
 }

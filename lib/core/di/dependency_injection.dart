@@ -7,6 +7,8 @@ import 'package:task_manager_test/features/home/logic/cubit/home_cubit.dart';
 import 'package:task_manager_test/features/login/data/repo/login_repo.dart';
 import 'package:task_manager_test/features/login/logic/cubit/login_cubit.dart';
 import 'package:task_manager_test/features/signup/data/repo/signup_repo.dart';
+import 'package:task_manager_test/features/add_product/data/repo/add_product_repo.dart';
+import 'package:task_manager_test/features/add_product/logic/cubit/add_product_cubit.dart';
 import 'package:task_manager_test/features/product_details/data/repo/product_details_repo.dart';
 import 'package:task_manager_test/features/product_details/logic/cubit/product_details_cubit.dart';
 import 'package:task_manager_test/features/signup/logic/cubit/signup_cubit.dart';
@@ -35,4 +37,8 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<ProductDetailsCubit>(
     () => ProductDetailsCubit(getIt()),
   );
+
+  //add product
+  getIt.registerFactory<AddProductRepo>(() => AddProductRepo(getIt()));
+  getIt.registerFactory<AddProductCubit>(() => AddProductCubit(getIt()));
 }
