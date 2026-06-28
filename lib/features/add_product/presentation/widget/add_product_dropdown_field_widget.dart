@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_text_style.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 
 class AddProductDropdownFieldWidget extends StatelessWidget {
   const AddProductDropdownFieldWidget({
@@ -25,6 +25,8 @@ class AddProductDropdownFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return FormField<String>(
       key: ValueKey<String?>(value),
       initialValue: value,
@@ -38,19 +40,24 @@ class AddProductDropdownFieldWidget extends StatelessWidget {
               style: AppTextStyle.fon14darkBlueColorMedium.copyWith(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w600,
+                color: colors.primary,
               ),
             ),
             SizedBox(height: 8.h),
             DropdownButtonFormField<String>(
               initialValue: value,
               isExpanded: true,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: colors.primaryText,
+              ),
               hint: Text(
                 hint,
-                style: TextStyle(fontSize: 14.sp, color: AppColors.greyColor),
+                style: TextStyle(fontSize: 14.sp, color: colors.hintText),
               ),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: AppColors.whiteColor,
+                fillColor: colors.inputFill,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 16.w,
                   vertical: 14.h,
@@ -58,20 +65,20 @@ class AddProductDropdownFieldWidget extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                   borderSide: BorderSide(
-                    color: AppColors.darkBlueColor.withValues(alpha: 0.3),
+                    color: colors.primary.withValues(alpha: 0.3),
                     width: 1.5,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                   borderSide: BorderSide(
-                    color: AppColors.darkGreyColor.withValues(alpha: 0.25),
+                    color: colors.border,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
-                  borderSide: const BorderSide(
-                    color: AppColors.darkBlueColor,
+                  borderSide: BorderSide(
+                    color: colors.primary,
                     width: 2,
                   ),
                 ),
@@ -87,10 +94,10 @@ class AddProductDropdownFieldWidget extends StatelessWidget {
               ),
               icon: Icon(
                 Icons.keyboard_arrow_down_rounded,
-                color: AppColors.darkBlueColor,
+                color: colors.primary,
                 size: 24.sp,
               ),
-              dropdownColor: AppColors.whiteColor,
+              dropdownColor: colors.surface,
               borderRadius: BorderRadius.circular(12.r),
               items: items
                   .map(
@@ -100,7 +107,7 @@ class AddProductDropdownFieldWidget extends StatelessWidget {
                         displayBuilder?.call(item) ?? item,
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: AppColors.blackColor,
+                          color: colors.primaryText,
                         ),
                       ),
                     ),

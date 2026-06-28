@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_text_style.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/core/widget/app_text_button.dart';
 import 'package:task_manager_test/features/add_product/logic/cubit/add_product_cubit.dart';
 import 'package:task_manager_test/features/add_product/logic/cubit/add_product_state.dart';
@@ -17,6 +18,8 @@ class AddProductSubmitButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return BlocBuilder<AddProductCubit, AddProductState>(
       builder: (context, state) {
         if (state is AddProductLoading) {
@@ -25,8 +28,8 @@ class AddProductSubmitButtonWidget extends StatelessWidget {
             height: 56.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.r),
-              gradient: const LinearGradient(
-                colors: [AppColors.darkBlueColor, AppColors.lightBlueColor],
+              gradient: LinearGradient(
+                colors: [colors.primary, colors.primaryLight],
               ),
             ),
             child: const Center(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/global_navigator.dart';
 import 'package:task_manager_test/core/routing/app_router.dart';
 import 'package:task_manager_test/core/routing/routes.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme.dart';
+import 'package:task_manager_test/core/theming/theme_cubit.dart';
 
 class TaskManagerApp extends StatelessWidget {
   final AppRouter appRouter;
@@ -14,16 +16,19 @@ class TaskManagerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: _getDesignSize(context),
-      builder: (context, child) => MaterialApp(
-        title: 'Task Manager',
-        debugShowCheckedModeBanner: false,
-        initialRoute: Routes.splashScreen,
-        onGenerateRoute: appRouter.onGenerateRoute,
-        navigatorKey: NavigationServices.navigatorKey,
-        theme: ThemeData(
-          fontFamily: 'Inter',
-          scaffoldBackgroundColor: AppColors.whiteColor,
-        ),
+      builder: (context, child) => BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return MaterialApp(
+            title: 'Task Manager',
+            debugShowCheckedModeBanner: false,
+            initialRoute: Routes.splashScreen,
+            onGenerateRoute: appRouter.onGenerateRoute,
+            navigatorKey: NavigationServices.navigatorKey,
+            theme: AppTheme.lightTheme(),
+            darkTheme: AppTheme.darkTheme(),
+            themeMode: themeMode,
+          );
+        },
       ),
     );
   }

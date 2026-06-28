@@ -11,8 +11,8 @@ import 'package:task_manager_test/core/helper/constants.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
 import 'package:task_manager_test/core/network/dio_factory.dart';
 import 'package:task_manager_test/core/routing/routes.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_image.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -75,8 +75,9 @@ class _SplashScreenState extends State<SplashScreen> {
     if (_isLoading) {
       return const SizedBox.shrink();
     }
+    final colors = context.appTheme;
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: colors.surface,
       body: androidIs12OrAbove && !Platform.isIOS
           ? const SizedBox.shrink()
           : Column(
@@ -100,14 +101,14 @@ class _SplashScreenState extends State<SplashScreen> {
                       fontWeight: FontWeight.w700,
                       height: 1.2,
                     ),
-                    children: const [
+                    children: [
                       TextSpan(
                         text: 'Task ',
-                        style: TextStyle(color: AppColors.blackColor),
+                        style: TextStyle(color: colors.primaryText),
                       ),
                       TextSpan(
                         text: 'Manager',
-                        style: TextStyle(color: AppColors.lightBlueColor),
+                        style: TextStyle(color: colors.primaryLight),
                       ),
                     ],
                   ),
@@ -119,12 +120,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.blackColor,
+                    color: colors.primaryText,
                     height: 1.5,
                   ),
                 ),
-                // // Spacer(),
-                // // Image.asset(AppImage.splashImage2, fit: BoxFit.contain),
+
               ],
             ),
     );

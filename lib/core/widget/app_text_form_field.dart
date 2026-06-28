@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_text_style.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 
 class AppTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
@@ -54,26 +54,30 @@ class AppTextFormField extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return TextFormField(
       focusNode: focusNode,
       controller: controller,
       readOnly: enabledEdit ?? false,
-      cursorColor: AppColors.darkBlueColor,
+      cursorColor: colors.primary,
       keyboardType: keyboardType ?? TextInputType.text,
       textInputAction: textInputAction ?? TextInputAction.next,
-      style:
-          inputTextStyle ??
-          AppTextStyle.fon12BlackBold.copyWith(fontSize: 15.sp),
+      style: inputTextStyle ??
+          AppTextStyle.fon12BlackBold.copyWith(
+            fontSize: 15.sp,
+            color: colors.primaryText,
+          ),
       decoration: InputDecoration(
         label: Text.rich(
           TextSpan(
             children: [
               TextSpan(
                 text: labelText ?? '',
-                style:
-                    labelTextStyle ??
+                style: labelTextStyle ??
                     AppTextStyle.fon14darkBlueColorMedium.copyWith(
                       fontSize: 17.sp,
+                      color: colors.primary,
                     ),
               ),
               WidgetSpan(child: horizontalSpace(5)),
@@ -85,38 +89,37 @@ class AppTextFormField extends StatelessWidget {
           ),
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        fillColor: backgroundColor ?? AppColors.whiteColor,
-
+        fillColor: backgroundColor ?? colors.inputFill,
         filled: true,
         isDense: true,
-        contentPadding:
-            contentPadding ??
+        contentPadding: contentPadding ??
             EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 10)),
-          borderSide: BorderSide(color: AppColors.darkBlueColor, width: 2.2),
+          borderSide: BorderSide(color: colors.primary, width: 2.2),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 10)),
-          borderSide: BorderSide(color: AppColors.darkBlueColor, width: 2.2),
+          borderSide: BorderSide(color: colors.primary, width: 2.2),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 2),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
           borderRadius: BorderRadius.circular(borderRadius ?? 10.0),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 2),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
           borderRadius: BorderRadius.circular(borderRadius ?? 10.0),
         ),
         hintText: hintText ?? '',
-        hintStyle:
-            hintTextStyle ??
-            AppTextStyle.fon18darkGreyColorRegular.copyWith(fontSize: 13.sp),
+        hintStyle: hintTextStyle ??
+            AppTextStyle.fon18darkGreyColorRegular.copyWith(
+              fontSize: 13.sp,
+              color: colors.hintText,
+            ),
         suffixIcon: suffixIcon,
       ),
       maxLines: maxLines ?? 1,
       obscureText: isObscureText ?? false,
-      // style: AppTextStyle.font14WhiteMedium,
       validator: (value) {
         return validator(value);
       },

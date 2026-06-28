@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_text_style.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/product_details/data/models/product_detail_model.dart';
 import 'package:task_manager_test/features/product_details/presentation/widget/chip_label_widget.dart';
 
@@ -13,6 +13,7 @@ class ProductHeaderInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
     final isInStock =
         product.availabilityStatus?.toLowerCase().contains('in stock') ?? false;
 
@@ -20,11 +21,11 @@ class ProductHeaderInfoWidget extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: colors.surface,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: AppColors.blackColor.withValues(alpha: 0.06),
+            color: colors.shadow,
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -40,18 +41,14 @@ class ProductHeaderInfoWidget extends StatelessWidget {
               if (product.category != null)
                 ChipLabelWidget(
                   label: product.category!,
-                  backgroundColor: AppColors.darkBlueColor.withValues(
-                    alpha: 0.1,
-                  ),
-                  textColor: AppColors.darkBlueColor,
+                  backgroundColor: colors.primaryContainer,
+                  textColor: colors.onPrimaryContainer,
                 ),
               if (product.brand != null)
                 ChipLabelWidget(
                   label: product.brand!,
-                  backgroundColor: AppColors.lighterBlueColor.withValues(
-                    alpha: 0.15,
-                  ),
-                  textColor: AppColors.darkBlueColor,
+                  backgroundColor: colors.primaryContainer,
+                  textColor: colors.onPrimaryContainer,
                 ),
               if (product.availabilityStatus != null)
                 ChipLabelWidget(
@@ -71,7 +68,7 @@ class ProductHeaderInfoWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: 22.sp,
               fontWeight: FontWeight.w700,
-              color: AppColors.blackColor,
+              color: colors.primaryText,
               height: 1.3,
             ),
           ),
@@ -84,7 +81,7 @@ class ProductHeaderInfoWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28.sp,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.darkBlueColor,
+                  color: colors.primary,
                 ),
               ),
               if (product.reviews?.isNotEmpty == true) ...[

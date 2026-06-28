@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
 import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/profile/data/models/user_profile_model.dart';
 
 class ProfileAvatarWidget extends StatelessWidget {
@@ -12,15 +13,18 @@ class ProfileAvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 28.h),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: colors.surface,
         borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: colors.border),
         boxShadow: [
           BoxShadow(
-            color: AppColors.blackColor.withValues(alpha: 0.06),
+            color: colors.shadow,
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -35,7 +39,7 @@ class ProfileAvatarWidget extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.darkBlueColor.withValues(alpha: 0.25),
+                  color: colors.primary.withValues(alpha: 0.25),
                   blurRadius: 16,
                   offset: const Offset(0, 6),
                 ),
@@ -63,7 +67,7 @@ class ProfileAvatarWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: 22.sp,
               fontWeight: FontWeight.w700,
-              color: AppColors.blackColor,
+              color: colors.primaryText,
             ),
           ),
           verticalSpace(6),
@@ -72,7 +76,7 @@ class ProfileAvatarWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14.sp,
-              color: AppColors.greyColor,
+              color: colors.secondaryText,
             ),
           ),
         ],
@@ -88,10 +92,12 @@ class ProfileAvatarFallbackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.darkBlueColor, AppColors.lightBlueColor],
+          colors: [colors.primary, colors.primaryLight],
         ),
       ),
       child: Center(

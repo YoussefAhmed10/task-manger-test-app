@@ -14,6 +14,8 @@ import 'package:task_manager_test/features/add_product/logic/cubit/add_product_c
 import 'package:task_manager_test/features/product_details/data/repo/product_details_repo.dart';
 import 'package:task_manager_test/features/product_details/logic/cubit/product_details_cubit.dart';
 import 'package:task_manager_test/features/signup/logic/cubit/signup_cubit.dart';
+import 'package:task_manager_test/core/theming/theme_cubit.dart';
+import 'package:task_manager_test/core/theming/theme_repository.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -47,4 +49,8 @@ Future<void> setupGetIt() async {
   //add product
   getIt.registerFactory<AddProductRepo>(() => AddProductRepo(getIt()));
   getIt.registerFactory<AddProductCubit>(() => AddProductCubit(getIt()));
+
+  //theme
+  getIt.registerLazySingleton<ThemeRepository>(() => ThemeRepository());
+  getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit(getIt()));
 }

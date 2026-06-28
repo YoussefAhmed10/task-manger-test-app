@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_manager_test/core/helper/spacing_sizedbox.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
 import 'package:task_manager_test/core/theming/app_text_style.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/core/widget/app_text_button.dart';
 
 class AddProductSuccessDialog extends StatelessWidget {
@@ -17,9 +17,12 @@ class AddProductSuccessDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: colors.surface,
       insetPadding: REdgeInsets.symmetric(horizontal: 24),
       child: Padding(
         padding: REdgeInsets.all(24),
@@ -29,8 +32,10 @@ class AddProductSuccessDialog extends StatelessWidget {
             Container(
               width: 72.w,
               height: 72.w,
-              decoration: const BoxDecoration(
-                color: Color(0xFFE8F5E9),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? const Color(0xFF1B3D2F)
+                    : const Color(0xFFE8F5E9),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -45,7 +50,7 @@ class AddProductSuccessDialog extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyle.fon18darkGreyColorRegular.copyWith(
                 fontWeight: FontWeight.w700,
-                color: AppColors.blackColor,
+                color: colors.primaryText,
               ),
             ),
             verticalSpace(12),
@@ -53,7 +58,7 @@ class AddProductSuccessDialog extends StatelessWidget {
               '"$productTitle" was created successfully.',
               textAlign: TextAlign.center,
               style: AppTextStyle.fon16lightBlackColorMedium.copyWith(
-                color: AppColors.greyColor,
+                color: colors.secondaryText,
               ),
             ),
             verticalSpace(16),
@@ -61,9 +66,15 @@ class AddProductSuccessDialog extends StatelessWidget {
               width: double.infinity,
               padding: REdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF8E1),
+                color: isDark
+                    ? const Color(0xFF3D2E1A)
+                    : const Color(0xFFFFF8E1),
                 borderRadius: BorderRadius.circular(12.r),
-                border: Border.all(color: const Color(0xFFFFE082)),
+                border: Border.all(
+                  color: isDark
+                      ? const Color(0xFF5D4037)
+                      : const Color(0xFFFFE082),
+                ),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +90,9 @@ class AddProductSuccessDialog extends StatelessWidget {
                       'DummyJSON simulates product creation — the product is not permanently saved.',
                       style: AppTextStyle.fon16lightBlackColorMedium.copyWith(
                         fontSize: 13.sp,
-                        color: const Color(0xFF5D4037),
+                        color: isDark
+                            ? const Color(0xFFFFCC80)
+                            : const Color(0xFF5D4037),
                         height: 1.4,
                       ),
                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 
 class AddProductAppBarWidget extends StatelessWidget {
   const AddProductAppBarWidget({super.key, required this.onBack});
@@ -9,8 +9,10 @@ class AddProductAppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Container(
-      color: AppColors.whiteColor,
+      color: colors.appBarBackground,
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
       child: Row(
         children: [
@@ -19,7 +21,7 @@ class AddProductAppBarWidget extends StatelessWidget {
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 20.sp,
-              color: AppColors.blackColor,
+              color: colors.primaryText,
             ),
           ),
           Text(
@@ -27,7 +29,7 @@ class AddProductAppBarWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,
-              color: AppColors.blackColor,
+              color: colors.primaryText,
             ),
           ),
         ],

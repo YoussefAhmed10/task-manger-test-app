@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_manager_test/core/theming/app_colors.dart';
+import 'package:task_manager_test/core/theming/app_theme_extension.dart';
 import 'package:task_manager_test/features/profile/logic/cubit/profile_cubit.dart';
 import 'package:task_manager_test/features/profile/logic/cubit/profile_state.dart';
 import 'package:task_manager_test/features/profile/presentation/widget/profile_app_bar_widget.dart';
@@ -24,8 +24,10 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appTheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: colors.scaffoldBackground,
       body: SafeArea(
         child: Column(
           children: [
@@ -37,9 +39,9 @@ class ProfileScreenState extends State<ProfileScreen> {
               child: BlocBuilder<ProfileCubit, ProfileState>(
                 builder: (context, state) {
                   if (state is ProfileLoading) {
-                    return const Center(
+                    return Center(
                       child: CircularProgressIndicator(
-                        color: AppColors.darkBlueColor,
+                        color: colors.primary,
                       ),
                     );
                   }
