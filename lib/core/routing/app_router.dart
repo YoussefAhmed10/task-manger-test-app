@@ -9,6 +9,8 @@ import 'package:task_manager_test/features/login/presentation/screen/login_scree
 import 'package:task_manager_test/features/signup/logic/cubit/signup_cubit.dart';
 import 'package:task_manager_test/features/add_product/logic/cubit/add_product_cubit.dart';
 import 'package:task_manager_test/features/add_product/presentation/screen/add_product_screen.dart';
+import 'package:task_manager_test/features/profile/logic/cubit/profile_cubit.dart';
+import 'package:task_manager_test/features/profile/presentation/screen/profile_screen.dart';
 import 'package:task_manager_test/features/product_details/logic/cubit/product_details_cubit.dart';
 import 'package:task_manager_test/features/product_details/presentation/screen/product_details_screen.dart';
 import 'package:task_manager_test/features/signup/presentation/screen/signup_screen.dart';
@@ -47,6 +49,13 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (_) => getIt<AddProductCubit>(),
             child: const AddProductScreen(),
+          ),
+        );
+      case Routes.profileScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<ProfileCubit>(),
+            child: const ProfileScreen(),
           ),
         );
       default:
